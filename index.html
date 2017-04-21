@@ -73,18 +73,15 @@ URL: https://code.google.com/p/io-2012-slides
 <slide  >
   
     <hgroup>
-      <h2>Content/Agenda</h2>
+      <h2>Agenda</h2>
       <h3></h3>
     </hgroup>
     <article ><ul>
 <li>about me</li>
 <li>topic discussion</li>
-<li>language</li>
-<li>words</li>
-<li>gensim</li>
-<li>demo</li>
-<li>quora Question Pairs - Contest</li>
-<li>know your limits</li>
+<li>words &amp; language</li>
+<li>word2vec &amp; gensim</li>
+<li>quora question pairs - kaggle contest</li>
 <li>questions ?</li>
 </ul></article>
  
@@ -105,7 +102,7 @@ URL: https://code.google.com/p/io-2012-slides
 </li>
 <li>ex-amazon employee</li>
 <li>python lover, nlp enthusiast</li>
-<li>love travelling(anybody who hates?)</li>
+<li>love travelling(anybody who hate?)</li>
 </ul></article>
  
 </slide>
@@ -117,9 +114,18 @@ URL: https://code.google.com/p/io-2012-slides
       <h3></h3>
     </hgroup>
     <article ><ul>
-<li>semantic similarity between two sentences<ul>
-<li>Semantic similarity is a metric defined over a set of documents or terms, where the idea of distance between them is based on the likeness of their meaning or semantic content as opposed to similarity which can be estimated regarding their syntactical representation (e.g. their string format).</li>
-<li>IS-A relation</li>
+<li>
+<p>semantic similarity between two sentences</p>
+<ul>
+<li>eg: how can I uninstall snapchat ? | what is the procedure to uninstall snapchat ? | how to uninstall snapchat ?</li>
+<li>the idea of semantic similarity between the sentences is based on the likeness of their meaning or semantic content.</li>
+<li>meaning not the structure</li>
+</ul>
+</li>
+<li>
+<p>word vectors</p>
+<ul>
+<li>representing words by vectors -&gt; 'cat' is represented by [.4, .5, .45, .012 ,,,,,,]</li>
 </ul>
 </li>
 </ul></article>
@@ -133,7 +139,9 @@ URL: https://code.google.com/p/io-2012-slides
       <h3></h3>
     </hgroup>
     <article ><ul>
-<li>ambiguous<ul>
+<li>language helps us in communication</li>
+<li>if we want to understand language, we have to understand the concepts and how they’re linked together to create meaning</li>
+<li>it is also ambiguous<ul>
 <li>I saw a man on a hill with a telescope.</li>
 <li>Look at the dog with one eye.</li>
 </ul>
@@ -149,7 +157,91 @@ URL: https://code.google.com/p/io-2012-slides
       <h3></h3>
     </hgroup>
     <article ><ul>
-<li>what is the meaning of 'bank'</li>
+<li>word is the most basic unit in semantic tasks</li>
+<li>semantic tasks are concerned with meaning</li>
+<li>word is the most basic unit that conveys meaning</li>
+<li>uninstall, beautiful, bank etc</li>
+</ul></article>
+ 
+</slide>
+
+<slide  >
+  
+    <hgroup>
+      <h2>words</h2>
+      <h3></h3>
+    </hgroup>
+    <article ><ul class="build">
+<li>normally a word is stored as a string - it doesn't convey any meaning</li>
+<li>this representation can help us find similarities in some specific use cases. cars-car, hands-hand etc</li>
+<li>but words which are similar don't necessarily have to be same at character level : beautiful-alluring</li>
+<li>so what can we do ?</li>
+<li>we represent words by vectors</li>
+</ul></article>
+ 
+</slide>
+
+<slide  >
+  
+    <hgroup>
+      <h2>words representation</h2>
+      <h3></h3>
+    </hgroup>
+    <article ><ul class="build">
+<li>we represent words by vectors</li>
+<li>if suppose two words <code>beautiful</code> and <code>alluring</code> are represented by vectors <code>v1</code> and <code>v2</code>, the idea is<ul class="build">
+<li><code>v1</code> and <code>v2</code> should be very similar because they convey the same meaning</li>
+</ul>
+</li>
+<li>if suppose <code>dog</code> is represented by vector <code>v3</code>,<ul class="build">
+<li><code>similarity(v1, v2) &gt; similarity(v1, v3)</code></li>
+</ul>
+</li>
+</ul></article>
+ 
+</slide>
+
+<slide  >
+  
+    <hgroup>
+      <h2>words representation - examples</h2>
+      <h3></h3>
+    </hgroup>
+    <article ><ul>
+<li>examples of words representation in vector form</li>
+<li>api - link</li>
+<li>vector examples</li>
+</ul>
+<h3>Just few lines of code</h3>
+<p><pre class="prettyprint" data-lang="python">
+from gensim.models.keyedvectors import KeyedVectors
+word_vectors = KeyedVectors.load_word2vec_format('/tmp/vectors.txt', binary=False)
+....
+print word_vecors['beautiful']
+print word_vecors.most_similar(positive=['woman', 'king'], negative=['man'])
+print word_vecors.similarity('woman', 'man')</p>
+</pre></article>
+ 
+</slide>
+
+<slide  >
+  
+    <hgroup>
+      <h2>words vectors - how do we build them ?</h2>
+      <h3></h3>
+    </hgroup>
+    <article ><ul>
+<li>first lets understand <code>Distributional Hypothesis</code><ul>
+<li>words that occur in the same contexts tend to have similar meanings.</li>
+<li>the underlying idea is - "a word is characterized by the company it keeps"</li>
+</ul>
+</li>
+<li>we have three sentences<ul>
+<li>india won the cricket match against sri lanka</li>
+<li>australia won the cricket match against pakistan</li>
+<li>bangladesh beat pakistan in the final cricket match</li>
+</ul>
+</li>
 </ul></article>
  
 </slide>
@@ -161,7 +253,18 @@ URL: https://code.google.com/p/io-2012-slides
       <h3></h3>
     </hgroup>
     <article ><ul>
-<li>what is the meaning of 'bank'</li>
+<li>we have three sentences<ul>
+<li>india won the cricket match against sri lanka</li>
+<li>australia won the cricket match against pakistan</li>
+<li>bangladesh beat pakistan in the final cricket match</li>
+</ul>
+</li>
+<li>look at these pairs<ul>
+<li>india  - match, india - cricket</li>
+<li>bangladesh - match, bangladesh - cricket</li>
+<li>australia - match, australia - cricket</li>
+</ul>
+</li>
 </ul></article>
  
 </slide>
@@ -169,11 +272,29 @@ URL: https://code.google.com/p/io-2012-slides
 <slide  >
   
     <hgroup>
-      <h2>Simple matrix of co - occurrences</h2>
+      <h2>Simple word vectors</h2>
       <h3></h3>
     </hgroup>
     <article ><ul>
-<li>what is the meaning of 'bank'</li>
+<li>
+<p>look at these pairs</p>
+<ul>
+<li>india  - match, india - cricket</li>
+<li>bangladesh - match, bangladesh - cricket</li>
+<li>australia - match, australia - cricket</li>
+</ul>
+</li>
+<li>
+<p>india, bangladesh and australia - all in the similar context</p>
+<ul>
+<li>winning, loosing, playing a cricket match</li>
+<li>they are similar</li>
+</ul>
+</li>
+<li>so this what <code>Distributional Hypothesis</code> says<ul>
+<li>similar words =&gt; similar neighbors =&gt; similar vectors</li>
+</ul>
+</li>
 </ul></article>
  
 </slide>
@@ -181,23 +302,16 @@ URL: https://code.google.com/p/io-2012-slides
 <slide  >
   
     <hgroup>
-      <h2>word representations</h2>
+      <h2>words vectors - how do we produce them ?</h2>
       <h3></h3>
     </hgroup>
     <article ><ul>
-<li>what is the meaning of 'bank'</li>
-</ul></article>
- 
-</slide>
-
-<slide  >
-  
-    <hgroup>
-      <h2>word embeddings</h2>
-      <h3></h3>
-    </hgroup>
-    <article ><ul>
-<li>what is the meaning of 'bank'</li>
+<li>so this what <code>Distributional Hypothesis</code> says<ul>
+<li>similar words =&gt; similar neighbors =&gt; similar vectors</li>
+</ul>
+</li>
+<li>this is the basic idea of building word vectors</li>
+<li>Tomas Mikolov from google created a group of models - word2vec to produce word embeddings/vectors</li>
 </ul></article>
  
 </slide>
@@ -220,11 +334,26 @@ URL: https://code.google.com/p/io-2012-slides
 <slide  >
   
     <hgroup>
-      <h2>lets play</h2>
+      <h2>semantic similarity between sentences</h2>
       <h3></h3>
     </hgroup>
     <article ><ul>
-<li>what is the meaning of 'bank'</li>
+<li><em>we have word vectors now</em></li>
+<li>
+<p>we have two sentences</p>
+<ul>
+<li>Obama speaks to the media in Illinois</li>
+<li>The President greets the press in Chicago</li>
+</ul>
+</li>
+<li>
+<p>the above sentences are similar</p>
+<ul>
+<li>Chicago is a city in Illinois</li>
+<li>press = media</li>
+<li>speaks = greets</li>
+</ul>
+</li>
 </ul></article>
  
 </slide>
@@ -232,11 +361,18 @@ URL: https://code.google.com/p/io-2012-slides
 <slide  >
   
     <hgroup>
-      <h2>quora question pairs - contest</h2>
+      <h2>semantic similarity between sentences</h2>
       <h3></h3>
     </hgroup>
-    <article ><ul>
-<li>what is the meaning of 'bank'</li>
+    <article ><ul class="build">
+<li><em>we have word vectors now</em></li>
+<li>we have two sentences which are similar</li>
+<li>any algorithm which works on word strings would fail</li>
+<li>what can we do ?<ul class="build">
+<li>we can find the Euclidean distance in the word2vec embedding space between corresponding pairs and then add them</li>
+<li>we can do the pos tagging of both the sentences and then find the similarity between verbs/nouns etc</li>
+</ul>
+</li>
 </ul></article>
  
 </slide>
@@ -244,12 +380,90 @@ URL: https://code.google.com/p/io-2012-slides
 <slide  >
   
     <hgroup>
-      <h2>know your limits</h2>
+      <h2>lets play again - word mover distance</h2>
       <h3></h3>
     </hgroup>
     <article ><ul>
-<li>what is the meaning of 'bank'</li>
+<li>definition</li>
+<li>api link</li>
+<li>that's why I love python</li>
+</ul>
+<pre class="prettyprint" data-lang="python">
+from gensim.models.keyedvectors import KeyedVectors
+model = KeyedVectors.load_word2vec_format('/tmp/vectors.txt', binary=False)
+....
+print model['beautiful']
+print model.most_similar(positive=['woman', 'king'], negative=['man'])
+print model.similarity('woman', 'man')
+<b>print model.wmdistance(
+        'documents required'.split(),
+        'papers needed'.split())</b>
+</pre></article>
+ 
+</slide>
+
+<slide  >
+  
+    <hgroup>
+      <h2>semantic similarity between sentences(cont..)</h2>
+      <h3></h3>
+    </hgroup>
+    <article ><ul>
+<li>wmd and other algorithms are good starting point for semantic similarity</li>
+<li>what if we want to improve ?</li>
+<li>best would be if we have some labelled data</li>
+<li>something like -&gt; q1, q2, is_similar</li>
+<li>we can use features like the following to train our model<ul>
+<li>common words</li>
+<li>wmd distance</li>
+<li>etc</li>
+</ul>
+</li>
 </ul></article>
+ 
+</slide>
+
+<slide  >
+  
+    <hgroup>
+      <h2>quora question pairs - kaggle contest</h2>
+      <h3></h3>
+    </hgroup>
+    <article ><ul>
+<li>can you identify question pairs that have the same intent?</li>
+<li>in simple terms<ul>
+<li>given two sentences s1, s2 - we have to tell whether they are duplicates</li>
+</ul>
+</li>
+<li>400k of labelled data</li>
+<li>use above idea to build your models - use features like<ul>
+<li>
+<h1>of common words</h1>
+</li>
+<li>wmd distance etc</li>
+</ul>
+</li>
+</ul></article>
+ 
+</slide>
+
+<slide  >
+  
+    <hgroup>
+      <h2>quora question pairs - sample model</h2>
+      <h3></h3>
+    </hgroup>
+    <article ><pre class="prettyprint" data-lang="python">
+from gensim.models.keyedvectors import KeyedVectors
+model = KeyedVectors.load_word2vec_format('/tmp/vectors.txt', binary=False)
+....
+print model['beautiful']
+print model.most_similar(positive=['woman', 'king'], negative=['man'])
+print model.similarity('woman', 'man')
+<b>print model.wmdistance(
+        'documents required'.split(),
+        'papers needed'.split())</b>
+</pre></article>
  
 </slide>
 
@@ -328,17 +542,6 @@ URL: https://code.google.com/p/io-2012-slides
 
 </slides>
 
-<script>
-var _gaq = _gaq || [];
-_gaq.push(['_setAccount', 'UA-XXXXXXXX-1']);
-_gaq.push(['_trackPageview']);
-
-(function() {
-  var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
-  ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
-  var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
-})();
-</script>
 
 <!--[if IE]>
   <script src="http://ajax.googleapis.com/ajax/libs/chrome-frame/1/CFInstall.min.js"></script>

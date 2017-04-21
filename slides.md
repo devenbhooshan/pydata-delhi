@@ -9,17 +9,14 @@
 % favicon: http://www.stanford.edu/favicon.ico
 
 ---
-title: Content/Agenda
+title: Agenda
 build_lists: false
 
 * about me
 * topic discussion
-* language
-* words
-* gensim
-* demo
-* quora Question Pairs - Contest
-* know your limits
+* words & language
+* word2vec & gensim
+* quora question pairs - kaggle contest
 * questions ?
 
 ---
@@ -33,20 +30,26 @@ class: img-top-center
     * we use AI + Human to automate customer support
 * ex-amazon employee
 * python lover, nlp enthusiast
-* love travelling(anybody who hates?)
+* love travelling(anybody who hate?)
 ---
 
 title: topic discussion
 
 * semantic similarity between two sentences
-    * Semantic similarity is a metric defined over a set of documents or terms, where the idea of distance between them is based on the likeness of their meaning or semantic content as opposed to similarity which can be estimated regarding their syntactical representation (e.g. their string format).
-    * IS-A relation
+    * eg: how can I uninstall snapchat ? | what is the procedure to uninstall snapchat ? | how to uninstall snapchat ?
+    * the idea of semantic similarity between the sentences is based on the likeness of their meaning or semantic content.
+    * meaning not the structure
+
+* word vectors
+    * representing words by vectors -> 'cat' is represented by [.4, .5, .45, .012 ,,,,,,]
 
 ---
 
 title: language
 
-* ambiguous
+* language helps us in communication
+* if we want to understand language, we have to understand the concepts and how they’re linked together to create meaning
+* it is also ambiguous
     * I saw a man on a hill with a telescope.
     * Look at the dog with one eye.
 
@@ -54,32 +57,97 @@ title: language
 
 title: words
 
-* what is the meaning of 'bank'
+* word is the most basic unit in semantic tasks
+* semantic tasks are concerned with meaning
+* word is the most basic unit that conveys meaning
+* uninstall, beautiful, bank etc
+---
 
+title: words
+build_lists: true
+
+* normally a word is stored as a string - it doesn't convey any meaning
+* this representation can help us find similarities in some specific use cases. cars-car, hands-hand etc
+* but words which are similar don't necessarily have to be same at character level : beautiful-alluring
+* so what can we do ?
+* we represent words by vectors
+
+---
+
+title: words representation
+build_lists: true
+
+* we represent words by vectors
+* if suppose two words `beautiful` and `alluring` are represented by vectors `v1` and `v2`, the idea is
+    * `v1` and `v2` should be very similar because they convey the same meaning
+* if suppose `dog` is represented by vector `v3`,
+    * `similarity(v1, v2) > similarity(v1, v3)`
+
+---
+
+title: words representation - examples
+
+* examples of words representation in vector form
+* api - link
+* vector examples
+### Just few lines of code
+<pre class="prettyprint" data-lang="python">
+from gensim.models.keyedvectors import KeyedVectors
+word_vectors = KeyedVectors.load_word2vec_format('/tmp/vectors.txt', binary=False)
+....
+print word_vecors['beautiful']
+print word_vecors.most_similar(positive=['woman', 'king'], negative=['man'])
+print word_vecors.similarity('woman', 'man')
+
+</pre>
+
+---
+
+title: words vectors - how do we build them ?
+
+* first lets understand `Distributional Hypothesis`
+    * words that occur in the same contexts tend to have similar meanings.
+    * the underlying idea is - "a word is characterized by the company it keeps"
+* we have three sentences
+    * india won the cricket match against sri lanka
+    * australia won the cricket match against pakistan
+    * bangladesh beat pakistan in the final cricket match
 ---
 
 title: words occurrences
 
-* what is the meaning of 'bank'
+* we have three sentences
+    * india won the cricket match against sri lanka
+    * australia won the cricket match against pakistan
+    * bangladesh beat pakistan in the final cricket match
+* look at these pairs
+    * india  - match, india - cricket
+    * bangladesh - match, bangladesh - cricket
+    * australia - match, australia - cricket
 
 ---
 
-title: Simple matrix of co - occurrences
+title: Simple word vectors
 
-* what is the meaning of 'bank'
+* look at these pairs
+    * india  - match, india - cricket
+    * bangladesh - match, bangladesh - cricket
+    * australia - match, australia - cricket
+
+* india, bangladesh and australia - all in the similar context
+    * winning, loosing, playing a cricket match
+    * they are similar
+* so this what `Distributional Hypothesis` says
+    * similar words => similar neighbors => similar vectors
 
 ---
 
-title: word representations
+title: words vectors - how do we produce them ?
 
-* what is the meaning of 'bank'
-
----
-
-title: word embeddings
-
-* what is the meaning of 'bank'
-
+* so this what `Distributional Hypothesis` says
+    * similar words => similar neighbors => similar vectors
+* this is the basic idea of building word vectors
+* Tomas Mikolov from google created a group of models - word2vec to produce word embeddings/vectors
 ---
 title: word2vec & gensim
 build_lists: true
@@ -90,29 +158,92 @@ build_lists: true
 - gensim provides a nice Python implementation of Word2Vec
 
 ---
+title:  semantic similarity between sentences
 
-title: lets play
+* *we have word vectors now*
+* we have two sentences
+    * Obama speaks to the media in Illinois
+    * The President greets the press in Chicago
 
-* what is the meaning of 'bank'
+* the above sentences are similar
+    * Chicago is a city in Illinois
+    * press = media
+    * speaks = greets
+
+---
+title:  semantic similarity between sentences
+build_lists: true
+
+* *we have word vectors now*
+* we have two sentences which are similar
+* any algorithm which works on word strings would fail
+* what can we do ?
+    * we can find the Euclidean distance in the word2vec embedding space between corresponding pairs and then add them
+    * we can do the pos tagging of both the sentences and then find the similarity between verbs/nouns etc
+
+---
+title: lets play again - word mover distance
+
+* definition
+* api link
+* that's why I love python
+
+<pre class="prettyprint" data-lang="python">
+from gensim.models.keyedvectors import KeyedVectors
+model = KeyedVectors.load_word2vec_format('/tmp/vectors.txt', binary=False)
+....
+print model['beautiful']
+print model.most_similar(positive=['woman', 'king'], negative=['man'])
+print model.similarity('woman', 'man')
+<b>print model.wmdistance(
+        'documents required'.split(),
+        'papers needed'.split())</b>
+</pre>
 
 ---
 
-title: quora question pairs - contest
+title: semantic similarity between sentences(cont..)
 
-* what is the meaning of 'bank'
+* wmd and other algorithms are good starting point for semantic similarity
+* what if we want to improve ?
+* best would be if we have some labelled data
+* something like -> q1, q2, is_similar
+* we can use features like the following to train our model
+    * common words
+    * wmd distance
+    * etc
+---
+
+title: quora question pairs - kaggle contest
+
+* can you identify question pairs that have the same intent?
+* in simple terms
+    * given two sentences s1, s2 - we have to tell whether they are duplicates
+* 400k of labelled data
+* use above idea to build your models - use features like
+    * # of common words
+    * wmd distance etc
+
+---
+title: quora question pairs - sample model
+
+<pre class="prettyprint" data-lang="python">
+from gensim.models.keyedvectors import KeyedVectors
+model = KeyedVectors.load_word2vec_format('/tmp/vectors.txt', binary=False)
+....
+print model['beautiful']
+print model.most_similar(positive=['woman', 'king'], negative=['man'])
+print model.similarity('woman', 'man')
+<b>print model.wmdistance(
+        'documents required'.split(),
+        'papers needed'.split())</b>
+</pre>
 
 
 ---
-
-title: know your limits
-
-* what is the meaning of 'bank'
-
----
-
 title: questions?
 class: segue dark nobackground
-* what is the meaning of 'bank'
+
 
 ---
 
