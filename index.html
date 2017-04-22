@@ -70,23 +70,6 @@ URL: https://code.google.com/p/io-2012-slides
 </slide>
 
 
-<slide  >
-  
-    <hgroup>
-      <h2>Agenda</h2>
-      <h3></h3>
-    </hgroup>
-    <article ><ul>
-<li>about me</li>
-<li>topic discussion</li>
-<li>words &amp; language</li>
-<li>word2vec &amp; gensim</li>
-<li>quora question pairs - kaggle contest</li>
-<li>questions ?</li>
-</ul></article>
- 
-</slide>
-
 <slide class="img-top-center" >
   
     <hgroup>
@@ -94,15 +77,15 @@ URL: https://code.google.com/p/io-2012-slides
       <h3></h3>
     </hgroup>
     <article ><ul>
+<li>Deven</li>
 <li>Co-Founder, MindIQ<ul>
-<li>started in February 2016, launched the bot builder platform in aug-2016, 10,000 + bots were build -</li>
-<li>featured in techinasia, venturebeat, yourstory etc - clients : smart axiata(Cambodia), hubspot, wef etc</li>
 <li>we use AI + Human to automate customer support</li>
+<li>started in feb 2016, launched the bot builder platform in aug-2016, 10,000 + bots were build through our platform</li>
+<li>featured in techinasia, venturebeat, yourstory etc - clients : smart axiata(Cambodia), hubspot, wef etcf</li>
 </ul>
 </li>
 <li>ex-amazon employee</li>
 <li>python lover, nlp enthusiast</li>
-<li>love travelling(anybody who hate?)</li>
 </ul></article>
  
 </slide>
@@ -110,7 +93,38 @@ URL: https://code.google.com/p/io-2012-slides
 <slide  >
   
     <hgroup>
-      <h2>topic discussion</h2>
+      <h2>Agenda</h2>
+      <h3></h3>
+    </hgroup>
+    <article ><ul>
+<li>introduction</li>
+<li>word similarity</li>
+<li>sentence similarity</li>
+<li>questions ?</li>
+</ul></article>
+ 
+</slide>
+
+<slide  >
+  
+    <hgroup>
+      <h2>key takeaways</h2>
+      <h3></h3>
+    </hgroup>
+    <article ><ul class="build">
+<li>what is semantic similarity ?</li>
+<li>what are the applications of it ?</li>
+<li>word representations</li>
+<li>word2vec &amp; gensim apis</li>
+<li>kaggle contest - quora question pairs</li>
+</ul></article>
+ 
+</slide>
+
+<slide  >
+  
+    <hgroup>
+      <h2>introduction</h2>
       <h3></h3>
     </hgroup>
     <article ><ul>
@@ -118,14 +132,14 @@ URL: https://code.google.com/p/io-2012-slides
 <p>semantic similarity between two sentences</p>
 <ul>
 <li>eg: how can I uninstall snapchat ? | what is the procedure to uninstall snapchat ? | how to uninstall snapchat ?</li>
-<li>the idea of semantic similarity between the sentences is based on the likeness of their meaning or semantic content.</li>
-<li>meaning not the structure</li>
+<li>these sentences are conveying the same thing/meaning/intent</li>
+<li>the idea of semantic similarity between the sentences is based on the likeness of their meaning or semantic content</li>
 </ul>
 </li>
 <li>
 <p>word vectors</p>
 <ul>
-<li>representing words by vectors -&gt; 'cat' is represented by [.4, .5, .45, .012 ,,,,,,]</li>
+<li>representing words by vectors</li>
 </ul>
 </li>
 </ul></article>
@@ -135,48 +149,16 @@ URL: https://code.google.com/p/io-2012-slides
 <slide  >
   
     <hgroup>
-      <h2>language</h2>
-      <h3></h3>
-    </hgroup>
-    <article ><ul>
-<li>language helps us in communication</li>
-<li>if we want to understand language, we have to understand the concepts and how they’re linked together to create meaning</li>
-<li>it is also ambiguous<ul>
-<li>I saw a man on a hill with a telescope.</li>
-<li>Look at the dog with one eye.</li>
-</ul>
-</li>
-</ul></article>
- 
-</slide>
-
-<slide  >
-  
-    <hgroup>
-      <h2>words</h2>
-      <h3></h3>
-    </hgroup>
-    <article ><ul>
-<li>word is the most basic unit in semantic tasks</li>
-<li>semantic tasks are concerned with meaning</li>
-<li>word is the most basic unit that conveys meaning</li>
-<li>uninstall, beautiful, bank etc</li>
-</ul></article>
- 
-</slide>
-
-<slide  >
-  
-    <hgroup>
-      <h2>words</h2>
+      <h2>word similarity</h2>
       <h3></h3>
     </hgroup>
     <article ><ul class="build">
-<li>normally a word is stored as a string - it doesn't convey any meaning</li>
+<li>word is the most basic unit that conveys meaning</li>
+<li>normally a word is representation as a string - it doesn't convey any meaning by own</li>
 <li>this representation can help us find similarities in some specific use cases. cars-car, hands-hand etc</li>
-<li>but words which are similar don't necessarily have to be same at character level : beautiful-alluring</li>
+<li>but what about words which are not same at character level : beautiful-alluring</li>
 <li>so what can we do ?</li>
-<li>we represent words by vectors</li>
+<li>we need some representation which takes into account the meaning</li>
 </ul></article>
  
 </slide>
@@ -184,7 +166,7 @@ URL: https://code.google.com/p/io-2012-slides
 <slide  >
   
     <hgroup>
-      <h2>words representation</h2>
+      <h2>words representation - vectors</h2>
       <h3></h3>
     </hgroup>
     <article ><ul class="build">
@@ -204,15 +186,50 @@ URL: https://code.google.com/p/io-2012-slides
 <slide  >
   
     <hgroup>
+      <h2>word2vec & gensim</h2>
+      <h3></h3>
+    </hgroup>
+    <article ><ul class="build">
+<li>word2vec is an algorithm for constructing vector representations of words, also known as word embeddings.</li>
+<li>The vector for each word is a semantic description of how that word is used in context, so two words that are used similarly in text will get similar vector represenations.</li>
+<li>Once you map words into vector space, you can then use vector math to find words that have similar semantics.</li>
+<li>gensim provides a nice Python implementation of Word2Vec</li>
+</ul></article>
+ 
+</slide>
+
+<slide  >
+  
+    <hgroup>
       <h2>words representation - examples</h2>
       <h3></h3>
     </hgroup>
     <article ><ul>
-<li>examples of words representation in vector form</li>
-<li>api - link</li>
-<li>vector examples</li>
+<li>api - base <code>http://wv.mindiq.in/</code></li>
+<li>vectors<ul>
+<li><code>vector/?word=dog</code></li>
 </ul>
-<h3>Just few lines of code</h3>
+</li>
+<li>similarity<ul>
+<li><code>similarity/?word1=kittens&amp;word2=cat</code></li>
+</ul>
+</li>
+<li>most similar<ul>
+<li><code>most_similar/?positive=mouse&amp;positive=kittens&amp;negative=cat
+&amp;topn=10</code></li>
+</ul>
+</li>
+</ul></article>
+ 
+</slide>
+
+<slide  >
+  
+    <hgroup>
+      <h2>words representation - examples</h2>
+      <h3></h3>
+    </hgroup>
+    <article ><h3>Just few lines of code</h3>
 <p><pre class="prettyprint" data-lang="python">
 from gensim.models.keyedvectors import KeyedVectors
 word_vectors = KeyedVectors.load_word2vec_format('/tmp/vectors.txt', binary=False)
@@ -220,17 +237,9 @@ word_vectors = KeyedVectors.load_word2vec_format('/tmp/vectors.txt', binary=Fals
 print word_vecors['beautiful']
 print word_vecors.most_similar(positive=['woman', 'king'], negative=['man'])
 print word_vecors.similarity('woman', 'man')</p>
-</pre></article>
- 
-</slide>
-
-<slide  >
-  
-    <hgroup>
-      <h2>words vectors - how do we build them ?</h2>
-      <h3></h3>
-    </hgroup>
-    <article ><ul>
+<h2></pre></h2>
+<p>title: words vectors - how do we produce them ?</p>
+<ul>
 <li>first lets understand <code>Distributional Hypothesis</code><ul>
 <li>words that occur in the same contexts tend to have similar meanings.</li>
 <li>the underlying idea is - "a word is characterized by the company it keeps"</li>
@@ -272,27 +281,18 @@ print word_vecors.similarity('woman', 'man')</p>
 <slide  >
   
     <hgroup>
-      <h2>Simple word vectors</h2>
+      <h2>words occurrences</h2>
       <h3></h3>
     </hgroup>
     <article ><ul>
-<li>
-<p>look at these pairs</p>
-<ul>
-<li>india  - match, india - cricket</li>
-<li>bangladesh - match, bangladesh - cricket</li>
-<li>australia - match, australia - cricket</li>
-</ul>
-</li>
-<li>
-<p>india, bangladesh and australia - all in the similar context</p>
-<ul>
+<li>india, bangladesh and australia - all in the similar context<ul>
 <li>winning, loosing, playing a cricket match</li>
-<li>they are similar</li>
 </ul>
 </li>
 <li>so this what <code>Distributional Hypothesis</code> says<ul>
 <li>similar words =&gt; similar neighbors =&gt; similar vectors</li>
+<li><code>india</code> - <code>bangladesh</code> - <code>australia</code> are similar(how ? country names)</li>
+<li>so <code>india</code> - <code>bangladesh</code> - <code>australia</code> will have similar vectors</li>
 </ul>
 </li>
 </ul></article>
@@ -312,21 +312,6 @@ print word_vecors.similarity('woman', 'man')</p>
 </li>
 <li>this is the basic idea of building word vectors</li>
 <li>Tomas Mikolov from google created a group of models - word2vec to produce word embeddings/vectors</li>
-</ul></article>
- 
-</slide>
-
-<slide  >
-  
-    <hgroup>
-      <h2>word2vec & gensim</h2>
-      <h3></h3>
-    </hgroup>
-    <article ><ul class="build">
-<li>word2vec is an algorithm for constructing vector representations of words, also known as word embeddings.</li>
-<li>The vector for each word is a semantic description of how that word is used in context, so two words that are used similarly in text will get similar vector represenations.</li>
-<li>Once you map words into vector space, you can then use vector math to find words that have similar semantics.</li>
-<li>gensim provides a nice Python implementation of Word2Vec</li>
 </ul></article>
  
 </slide>
@@ -384,8 +369,10 @@ print word_vecors.similarity('woman', 'man')</p>
       <h3></h3>
     </hgroup>
     <article ><ul>
-<li>definition</li>
-<li>api link</li>
+<li>api<ul>
+<li><code>word_mover_distance/?s1=Obama speaks to the media in Illinois&amp;s2=Obama greets to the press  in chicago</code></li>
+</ul>
+</li>
 <li>that's why I love python</li>
 </ul>
 <pre class="prettyprint" data-lang="python">

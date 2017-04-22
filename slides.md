@@ -8,73 +8,63 @@
 % contact: <span>twitter</span> <a href="http://twitter.com/devenbhooshan">@devenbhooshan</a>
 % favicon: http://www.stanford.edu/favicon.ico
 
+
+---
+title: about me
+class: img-top-center
+
+* Deven
+* Co-Founder, MindIQ
+    * we use AI + Human to automate customer support
+    * started in feb 2016, launched the bot builder platform in aug-2016, 10,000 + bots were build through our platform
+    * featured in techinasia, venturebeat, yourstory etc - clients : smart axiata(Cambodia), hubspot, wef etcf
+* ex-amazon employee
+* python lover, nlp enthusiast
+
 ---
 title: Agenda
 build_lists: false
 
-* about me
-* topic discussion
-* words & language
-* word2vec & gensim
-* quora question pairs - kaggle contest
+* introduction
+* word similarity
+* sentence similarity
 * questions ?
-
 ---
 
-title: about me
-class: img-top-center
+title: key takeaways
+build_lists: true
 
-* Co-Founder, MindIQ
-    * started in February 2016, launched the bot builder platform in aug-2016, 10,000 + bots were build -
-    * featured in techinasia, venturebeat, yourstory etc - clients : smart axiata(Cambodia), hubspot, wef etc
-    * we use AI + Human to automate customer support
-* ex-amazon employee
-* python lover, nlp enthusiast
-* love travelling(anybody who hate?)
+
+* what is semantic similarity ?
+* what are the applications of it ?
+* word representations
+* word2vec & gensim apis
+* kaggle contest - quora question pairs
 ---
-
-title: topic discussion
+title: introduction
 
 * semantic similarity between two sentences
     * eg: how can I uninstall snapchat ? | what is the procedure to uninstall snapchat ? | how to uninstall snapchat ?
-    * the idea of semantic similarity between the sentences is based on the likeness of their meaning or semantic content.
-    * meaning not the structure
+    * these sentences are conveying the same thing/meaning/intent
+    * the idea of semantic similarity between the sentences is based on the likeness of their meaning or semantic content
 
 * word vectors
-    * representing words by vectors -> 'cat' is represented by [.4, .5, .45, .012 ,,,,,,]
+    * representing words by vectors
 
 ---
-
-title: language
-
-* language helps us in communication
-* if we want to understand language, we have to understand the concepts and how they’re linked together to create meaning
-* it is also ambiguous
-    * I saw a man on a hill with a telescope.
-    * Look at the dog with one eye.
-
----
-
-title: words
-
-* word is the most basic unit in semantic tasks
-* semantic tasks are concerned with meaning
-* word is the most basic unit that conveys meaning
-* uninstall, beautiful, bank etc
----
-
-title: words
+title: word similarity
 build_lists: true
 
-* normally a word is stored as a string - it doesn't convey any meaning
+* word is the most basic unit that conveys meaning
+* normally a word is representation as a string - it doesn't convey any meaning by own
 * this representation can help us find similarities in some specific use cases. cars-car, hands-hand etc
-* but words which are similar don't necessarily have to be same at character level : beautiful-alluring
+* but what about words which are not same at character level : beautiful-alluring
 * so what can we do ?
-* we represent words by vectors
+* we need some representation which takes into account the meaning
 
 ---
 
-title: words representation
+title: words representation - vectors
 build_lists: true
 
 * we represent words by vectors
@@ -84,12 +74,30 @@ build_lists: true
     * `similarity(v1, v2) > similarity(v1, v3)`
 
 ---
+title: word2vec & gensim
+build_lists: true
+
+- word2vec is an algorithm for constructing vector representations of words, also known as word embeddings.
+- The vector for each word is a semantic description of how that word is used in context, so two words that are used similarly in text will get similar vector represenations.
+- Once you map words into vector space, you can then use vector math to find words that have similar semantics.
+- gensim provides a nice Python implementation of Word2Vec
+---
 
 title: words representation - examples
 
-* examples of words representation in vector form
-* api - link
-* vector examples
+* api - base `http://wv.mindiq.in/`
+* vectors
+    * `vector/?word=dog`
+* similarity
+    * `similarity/?word1=kittens&word2=cat`
+* most similar
+    * `most_similar/?positive=mouse&positive=kittens&negative=cat
+    &topn=10`
+
+---
+title: words representation - examples
+
+
 ### Just few lines of code
 <pre class="prettyprint" data-lang="python">
 from gensim.models.keyedvectors import KeyedVectors
@@ -100,10 +108,10 @@ print word_vecors.most_similar(positive=['woman', 'king'], negative=['man'])
 print word_vecors.similarity('woman', 'man')
 
 </pre>
+----
 
----
 
-title: words vectors - how do we build them ?
+title: words vectors - how do we produce them ?
 
 * first lets understand `Distributional Hypothesis`
     * words that occur in the same contexts tend to have similar meanings.
@@ -127,18 +135,14 @@ title: words occurrences
 
 ---
 
-title: Simple word vectors
-
-* look at these pairs
-    * india  - match, india - cricket
-    * bangladesh - match, bangladesh - cricket
-    * australia - match, australia - cricket
+title: words occurrences
 
 * india, bangladesh and australia - all in the similar context
     * winning, loosing, playing a cricket match
-    * they are similar
 * so this what `Distributional Hypothesis` says
     * similar words => similar neighbors => similar vectors
+    * `india` - `bangladesh` - `australia` are similar(how ? country names)
+    * so `india` - `bangladesh` - `australia` will have similar vectors
 
 ---
 
@@ -148,15 +152,6 @@ title: words vectors - how do we produce them ?
     * similar words => similar neighbors => similar vectors
 * this is the basic idea of building word vectors
 * Tomas Mikolov from google created a group of models - word2vec to produce word embeddings/vectors
----
-title: word2vec & gensim
-build_lists: true
-
-- word2vec is an algorithm for constructing vector representations of words, also known as word embeddings.
-- The vector for each word is a semantic description of how that word is used in context, so two words that are used similarly in text will get similar vector represenations.
-- Once you map words into vector space, you can then use vector math to find words that have similar semantics.
-- gensim provides a nice Python implementation of Word2Vec
-
 ---
 title:  semantic similarity between sentences
 
@@ -184,8 +179,8 @@ build_lists: true
 ---
 title: lets play again - word mover distance
 
-* definition
-* api link
+* api
+    * `word_mover_distance/?s1=Obama speaks to the media in Illinois&s2=Obama greets to the press  in chicago`
 * that's why I love python
 
 <pre class="prettyprint" data-lang="python">
