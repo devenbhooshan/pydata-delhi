@@ -440,26 +440,6 @@ print model.similarity('woman', 'man')
  
 </slide>
 
-<slide  >
-  
-    <hgroup>
-      <h2>quora question pairs - sample model</h2>
-      <h3></h3>
-    </hgroup>
-    <article ><pre class="prettyprint" data-lang="python">
-from gensim.models.keyedvectors import KeyedVectors
-model = KeyedVectors.load_word2vec_format('/tmp/vectors.txt', binary=False)
-....
-print model['beautiful']
-print model.most_similar(positive=['woman', 'king'], negative=['man'])
-print model.similarity('woman', 'man')
-<b>print model.wmdistance(
-        'documents required'.split(),
-        'papers needed'.split())</b>
-</pre></article>
- 
-</slide>
-
 <slide class="segue dark nobackground" >
   
     <!-- <aside class="gdbar"><img src="images/google_developers_icon_128.png"></aside> -->

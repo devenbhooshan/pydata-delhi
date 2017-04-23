@@ -217,20 +217,6 @@ title: quora question pairs - kaggle contest
     * `#` of common words
     * wmd distance etc
 
----
-title: quora question pairs - sample model
-
-<pre class="prettyprint" data-lang="python">
-from gensim.models.keyedvectors import KeyedVectors
-model = KeyedVectors.load_word2vec_format('/tmp/vectors.txt', binary=False)
-....
-print model['beautiful']
-print model.most_similar(positive=['woman', 'king'], negative=['man'])
-print model.similarity('woman', 'man')
-<b>print model.wmdistance(
-        'documents required'.split(),
-        'papers needed'.split())</b>
-</pre>
 
 
 ---
