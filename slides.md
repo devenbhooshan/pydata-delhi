@@ -108,9 +108,7 @@ print word_vecors.most_similar(positive=['woman', 'king'], negative=['man'])
 print word_vecors.similarity('woman', 'man')
 
 </pre>
-----
-
-
+---
 title: words vectors - how do we produce them ?
 
 * first lets understand `Distributional Hypothesis`
@@ -216,7 +214,7 @@ title: quora question pairs - kaggle contest
     * given two sentences s1, s2 - we have to tell whether they are duplicates
 * 400k of labelled data
 * use above idea to build your models - use features like
-    * # of common words
+    * `#` of common words
     * wmd distance etc
 
 ---

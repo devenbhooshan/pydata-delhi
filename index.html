@@ -237,9 +237,17 @@ word_vectors = KeyedVectors.load_word2vec_format('/tmp/vectors.txt', binary=Fals
 print word_vecors['beautiful']
 print word_vecors.most_similar(positive=['woman', 'king'], negative=['man'])
 print word_vecors.similarity('woman', 'man')</p>
-<h2></pre></h2>
-<p>title: words vectors - how do we produce them ?</p>
-<ul>
+</pre></article>
+ 
+</slide>
+
+<slide  >
+  
+    <hgroup>
+      <h2>words vectors - how do we produce them ?</h2>
+      <h3></h3>
+    </hgroup>
+    <article ><ul>
 <li>first lets understand <code>Distributional Hypothesis</code><ul>
 <li>words that occur in the same contexts tend to have similar meanings.</li>
 <li>the underlying idea is - "a word is characterized by the company it keeps"</li>
@@ -424,9 +432,7 @@ print model.similarity('woman', 'man')
 </li>
 <li>400k of labelled data</li>
 <li>use above idea to build your models - use features like<ul>
-<li>
-<h1>of common words</h1>
-</li>
+<li><code>#</code> of common words</li>
 <li>wmd distance etc</li>
 </ul>
 </li>
